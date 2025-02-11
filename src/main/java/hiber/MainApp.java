@@ -1,10 +1,12 @@
 package hiber;
 
 import hiber.config.AppConfig;
+import hiber.model.Car;
 import hiber.model.User;
 import hiber.service.UserService;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
+import javax.persistence.Query;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -20,15 +22,28 @@ public class MainApp {
       userService.add(new User("User3", "Lastname3", "user3@mail.ru"));
       userService.add(new User("User4", "Lastname4", "user4@mail.ru"));
 
+      userService.add(new User("User5", "Lastname5", "user5@mail.ru",
+              new Car("Porcshe", 911)));
+      userService.add(new User("User6", "Lastname6", "user6@mail.ru",
+              new Car("Lada Granta", 21900)));
+      userService.add(new User("User7", "Lastname7", "user7@mail.ru",
+              new Car("Mercedes", 930)));
+      userService.add(new User("User8", "Lastname8", "user8@mail.ru",
+              new Car("Porsche", 911)));
+
       List<User> users = userService.listUsers();
-      for (User user : users) {
-         System.out.println("Id = "+user.getId());
-         System.out.println("First Name = "+user.getFirstName());
-         System.out.println("Last Name = "+user.getLastName());
-         System.out.println("Email = "+user.getEmail());
-         System.out.println();
-      }
+      printUsersFromList(users);
+      List<User> userWithCar = userService.getUserByCar("Lada Granta", 21900);
+      printUsersFromList(userWithCar);
 
       context.close();
+   }
+   private static void printUsersFromList(List<User> users) {
+      for (User user : users) {
+         System.out.println("First name = " + user.getFirstName());
+         System.out.println("Last name = " + user.getLastName());
+         System.out.println("Email = " + user.getEmail());
+         System.out.println("Car = " + user.getCar());
+      }
    }
 }
