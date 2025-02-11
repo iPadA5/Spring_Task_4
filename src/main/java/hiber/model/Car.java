@@ -1,10 +1,6 @@
 package hiber.model;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 @Entity
 public class Car {
@@ -15,8 +11,6 @@ public class Car {
     private String model;
     @Column
     private int series;
-    @Transient
-    private static List<Car> cars = new ArrayList<>();
 
     public Car() {}
 
